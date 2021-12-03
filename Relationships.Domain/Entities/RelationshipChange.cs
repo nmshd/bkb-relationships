@@ -1,8 +1,8 @@
 ﻿using System;
 using Enmeshed.DevelopmentKit.Identity.ValueObjects;
+using Enmeshed.Tooling;
 using Relationships.Domain.Errors;
 using Relationships.Domain.Ids;
-using Enmeshed.Tooling;
 
 namespace Relationships.Domain.Entities
 {

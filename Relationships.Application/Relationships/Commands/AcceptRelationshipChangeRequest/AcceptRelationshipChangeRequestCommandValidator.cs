@@ -1,4 +1,5 @@
 ﻿using Enmeshed.BuildingBlocks.Application.FluentValidation;
+using Enmeshed.Tooling.Extensions;
 using FluentValidation;
 
 namespace Relationships.Application.Relationships.Commands.AcceptRelationshipChangeRequest
@@ -8,7 +9,7 @@ namespace Relationships.Application.Relationships.Commands.AcceptRelationshipCha
         public AcceptRelationshipChangeRequestCommandValidator()
         {
             RuleFor(c => c.Id).DetailedNotNull();
-            RuleFor(c => c.ResponseContent).NumberOfBytes(0, 10 * 1024 * 1024);
+            RuleFor(c => c.ResponseContent).NumberOfBytes(0, 10.Mebibytes());
         }
     }
 }

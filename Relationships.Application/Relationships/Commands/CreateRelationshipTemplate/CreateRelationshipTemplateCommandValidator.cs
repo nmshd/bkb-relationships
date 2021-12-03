@@ -1,7 +1,8 @@
 ﻿using Enmeshed.BuildingBlocks.Application.Abstractions.Exceptions;
 using Enmeshed.BuildingBlocks.Application.FluentValidation;
-using FluentValidation;
 using Enmeshed.Tooling;
+using Enmeshed.Tooling.Extensions;
+using FluentValidation;
 
 namespace Relationships.Application.Relationships.Commands.CreateRelationshipTemplate
 {
@@ -9,7 +10,7 @@ namespace Relationships.Application.Relationships.Commands.CreateRelationshipTem
     {
         public CreateRelationshipTemplateCommandValidator()
         {
-            RuleFor(c => c.Content).NumberOfBytes(0, 10 * 1024 * 1024);
+            RuleFor(c => c.Content).NumberOfBytes(0, 10.Mebibytes());
 
             RuleFor(c => c.MaxNumberOfRelationships)
                 .GreaterThan(0).WithErrorCode(GenericApplicationErrors.Validation.InvalidPropertyValue().Code).When(c => c.MaxNumberOfRelationships != null);

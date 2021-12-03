@@ -4,11 +4,11 @@ using AutoMapper;
 using Enmeshed.BuildingBlocks.Application.Abstractions.Exceptions;
 using Enmeshed.BuildingBlocks.Application.Abstractions.Infrastructure.Persistence.Database;
 using Enmeshed.BuildingBlocks.Application.Abstractions.Infrastructure.UserContext;
+using Enmeshed.Tooling;
 using MediatR;
 using Relationships.Application.Extensions;
 using Relationships.Application.Relationships;
 using Relationships.Domain.Entities;
-using Enmeshed.Tooling;
 
 namespace Relationships.Application.RelationshipTemplates.Command.DeleteRelationshipTemplate
 {

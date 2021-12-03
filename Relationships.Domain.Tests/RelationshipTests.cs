@@ -1,11 +1,11 @@
 using System;
 using Enmeshed.DevelopmentKit.Identity.ValueObjects;
+using Enmeshed.Tooling;
 using FluentAssertions;
 using Relationships.Domain.Entities;
 using Relationships.Domain.Errors;
 using Relationships.Domain.Ids;
 using Relationships.Domain.Tests.Extensions;
-using Enmeshed.Tooling;
 using Xunit;
 
 namespace Relationships.Domain.Tests

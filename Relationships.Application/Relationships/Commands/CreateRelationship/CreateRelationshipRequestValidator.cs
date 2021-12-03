@@ -1,4 +1,5 @@
 ﻿using Enmeshed.BuildingBlocks.Application.FluentValidation;
+using Enmeshed.Tooling.Extensions;
 using FluentValidation;
 
 namespace Relationships.Application.Relationships.Commands.CreateRelationship
@@ -8,7 +9,7 @@ namespace Relationships.Application.Relationships.Commands.CreateRelationship
         public CreateRelationshipCommandValidator()
         {
             RuleFor(c => c.RelationshipTemplateId).DetailedNotEmpty();
-            RuleFor(c => c.Content).NumberOfBytes(0, 10 * 1024 * 1024);
+            RuleFor(c => c.Content).NumberOfBytes(0, 10.Mebibytes());
         }
     }
 }

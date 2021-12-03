@@ -49,7 +49,7 @@ namespace Relationships.API
 
             services.AddCustomApplicationInsights();
 
-            services.AddCustomFluentValidation(options => { });
+            services.AddCustomFluentValidation(_ => { });
 
             services.AddPersistence(options =>
             {

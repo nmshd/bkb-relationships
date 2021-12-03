@@ -4,11 +4,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using Enmeshed.BuildingBlocks.Application.Abstractions.Exceptions;
 using Enmeshed.DevelopmentKit.Identity.ValueObjects;
+using Enmeshed.Tooling;
 using Microsoft.EntityFrameworkCore;
 using Relationships.Common;
 using Relationships.Domain.Entities;
 using Relationships.Domain.Ids;
-using Enmeshed.Tooling;
 
 namespace Relationships.Application.Extensions
 {

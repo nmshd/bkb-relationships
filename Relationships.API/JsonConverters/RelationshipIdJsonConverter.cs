@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Relationships.Domain.Ids;
 using Enmeshed.StronglyTypedIds;
+using Relationships.Domain.Ids;
 
 namespace Relationships.API.JsonConverters
 {

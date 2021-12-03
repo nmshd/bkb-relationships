@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Enmeshed.DevelopmentKit.Identity.ValueObjects;
-using Relationships.Domain.Ids;
 using Enmeshed.Tooling;
+using Relationships.Domain.Ids;
 
 namespace Relationships.Domain.Entities
 {
