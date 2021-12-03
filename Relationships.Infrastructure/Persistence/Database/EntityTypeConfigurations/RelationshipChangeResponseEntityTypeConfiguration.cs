@@ -1,0 +1,35 @@
+﻿using Enmeshed.BuildingBlocks.Infrastructure.Persistence.Database.ValueConverters;
+using Enmeshed.DevelopmentKit.Identity.ValueObjects;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Relationships.Domain.Entities;
+
+namespace Relationships.Infrastructure.Persistence.Database.EntityTypeConfigurations
+{
+    public class RelationshipChangeResponseEntityTypeConfiguration : IEntityTypeConfiguration<RelationshipChangeResponse>
+    {
+        public void Configure(EntityTypeBuilder<RelationshipChangeResponse> builder)
+        {
+            builder.ToTable("RelationshipChanges");
+
+            builder.Ignore(x => x.Content);
+
+            builder.HasIndex(x => x.CreatedAt);
+            builder.HasIndex(x => x.CreatedBy);
+            builder.HasIndex(x => x.CreatedByDevice);
+
+            builder.Property(x => x.CreatedBy)
+                .HasColumnName("Res_CreatedBy")
+                .HasConversion(new IdentityAddressValueConverter(new ConverterMappingHints(IdentityAddress.MAX_LENGTH)));
+
+            builder.Property(x => x.CreatedByDevice)
+                .HasColumnName("Res_CreatedByDevice")
+                .HasConversion(new DeviceIdValueConverter(new ConverterMappingHints(DeviceId.MAX_LENGTH)));
+
+            builder.Property(x => x.CreatedAt)
+                .HasColumnName("Res_CreatedAt")
+                .HasConversion(new DateTimeValueConverter());
+        }
+    }
+}
