@@ -8,7 +8,7 @@ using Relationships.Domain.Entities;
 using Relationships.Infrastructure.Persistence.Database;
 using Xunit;
 
-namespace Relationships.Application.Tests.Tests.Extensions
+namespace Relationships.Application.Tests.Extensions
 {
     public class RelationshipTemplateQueryableExtensionsTests
     {

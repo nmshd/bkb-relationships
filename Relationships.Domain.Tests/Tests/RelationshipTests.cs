@@ -8,7 +8,7 @@ using Relationships.Domain.Ids;
 using Relationships.Domain.Tests.Extensions;
 using Xunit;
 
-namespace Relationships.Domain.Tests
+namespace Relationships.Domain.Tests.Tests
 {
     public class RelationshipTests
     {
