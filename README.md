@@ -2,7 +2,7 @@
 
 [![GitHub Actions CI](https://github.com/nmshd/bkb-relationships/workflows/Publish/badge.svg)](https://github.com/nmshd/bkb-relationships/actions?query=workflow%3APublish)
 
-This service maintains the list of existing Relationships between Identities and is responsible for the creation flow.
+This service maintains the list of existing Relationships between Identities and is responsible for the creation of those.
 
 ## Documentation
 
