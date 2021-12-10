@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Enmeshed.BuildingBlocks.Application.Abstractions.Exceptions;
+﻿using Enmeshed.BuildingBlocks.Application.Abstractions.Exceptions;
 using Relationships.Domain.Entities;
 
 namespace Relationships.Application.Extensions

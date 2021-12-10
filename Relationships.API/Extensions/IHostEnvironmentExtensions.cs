@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Hosting;
-
-namespace Relationships.API.Extensions
+﻿namespace Relationships.API.Extensions
 {
     public static class IHostEnvironmentExtensions
     {

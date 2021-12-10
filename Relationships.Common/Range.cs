@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Relationships.Common
+﻿namespace Relationships.Common
 {
     public class Range<T>
     {

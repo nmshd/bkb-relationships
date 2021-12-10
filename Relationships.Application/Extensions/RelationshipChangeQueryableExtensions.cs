@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Enmeshed.DevelopmentKit.Identity.ValueObjects;
+﻿using Enmeshed.DevelopmentKit.Identity.ValueObjects;
 using Relationships.Common;
 using Relationships.Domain.Entities;
 using Relationships.Domain.Ids;

@@ -1,5 +1,4 @@
-﻿using System;
-using Enmeshed.BuildingBlocks.Application.Abstractions.Infrastructure.EventBus.Events;
+﻿using Enmeshed.BuildingBlocks.Application.Abstractions.Infrastructure.EventBus.Events;
 using Relationships.Domain.Entities;
 
 namespace Relationships.Application.IntegrationEvents

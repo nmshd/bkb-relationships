@@ -1,5 +1,4 @@
-﻿using System;
-using Relationships.Domain.Errors;
+﻿using Relationships.Domain.Errors;
 
 namespace Relationships.Domain
 {

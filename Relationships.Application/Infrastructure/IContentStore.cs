@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Relationships.Domain.Entities;
+﻿using Relationships.Domain.Entities;
 
 namespace Relationships.Application.Infrastructure
 {

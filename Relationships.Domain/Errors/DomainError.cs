@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Relationships.Domain.Errors
+﻿namespace Relationships.Domain.Errors
 {
     public class DomainError : IEquatable<DomainError>
     {

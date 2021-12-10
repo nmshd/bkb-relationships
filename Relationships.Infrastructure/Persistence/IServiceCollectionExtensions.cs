@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Relationships.Application.Infrastructure;
 using Relationships.Infrastructure.Persistence.ContentStore;
 using Relationships.Infrastructure.Persistence.Database;
