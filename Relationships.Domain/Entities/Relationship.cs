@@ -87,30 +87,24 @@ public class Relationship
         switch (change.Type)
         {
             case RelationshipChangeType.Creation:
-                switch (change.Status)
+                return change.Status switch
                 {
-                    case RelationshipChangeStatus.Accepted:
-                        return RelationshipStatus.Active;
-                    case RelationshipChangeStatus.Rejected:
-                        return RelationshipStatus.Rejected;
-                    case RelationshipChangeStatus.Revoked:
-                        return RelationshipStatus.Revoked;
-                    default:
-                        throw new NotSupportedException();
-                }
+                    RelationshipChangeStatus.Accepted => RelationshipStatus.Active,
+                    RelationshipChangeStatus.Rejected => RelationshipStatus.Rejected,
+                    RelationshipChangeStatus.Revoked => RelationshipStatus.Revoked,
+                    RelationshipChangeStatus.Pending => throw new NotSupportedException(),
+                    _ => throw new NotSupportedException()
+                };
 
             case RelationshipChangeType.Termination:
-                switch (change.Status)
+                return change.Status switch
                 {
-                    case RelationshipChangeStatus.Accepted:
-                        return RelationshipStatus.Terminated;
-                    case RelationshipChangeStatus.Rejected:
-                        return RelationshipStatus.Active;
-                    case RelationshipChangeStatus.Revoked:
-                        return RelationshipStatus.Active;
-                    default:
-                        throw new NotSupportedException();
-                }
+                    RelationshipChangeStatus.Accepted => RelationshipStatus.Terminated,
+                    RelationshipChangeStatus.Rejected => RelationshipStatus.Active,
+                    RelationshipChangeStatus.Revoked => RelationshipStatus.Active,
+                    RelationshipChangeStatus.Pending => throw new NotSupportedException(),
+                    _ => throw new NotSupportedException()
+                };
             case RelationshipChangeType.TerminationCancellation:
                 throw new NotImplementedException();
             default:
@@ -125,7 +119,7 @@ public class Relationship
 
     public RelationshipChange RequestTermination(IdentityAddress requestedBy, DeviceId requestedByDevice)
     {
-        EnsureCanBeTerminated(requestedBy, requestedByDevice);
+        EnsureCanBeTerminated();
 
         var terminationChange = new RelationshipTerminationChange(this, requestedBy, requestedByDevice);
         _changes.Add(terminationChange);
@@ -133,7 +127,7 @@ public class Relationship
         return terminationChange;
     }
 
-    private void EnsureCanBeTerminated(IdentityAddress requestedBy, DeviceId requestedByDevice)
+    private void EnsureCanBeTerminated()
     {
         if (Status != RelationshipStatus.Active)
             throw new DomainException(DomainErrors.OnlyActiveRelationshipsCanBeTerminated());

@@ -15,6 +15,9 @@ public class BlobStorageContentStore : IContentStore
 
     public async Task SaveContentOfTemplate(RelationshipTemplate template)
     {
+        if (template.Content == null)
+            return;
+
         _blobStorage.Add(template.Id, template.Content);
         await _blobStorage.SaveAsync();
     }
@@ -27,12 +30,18 @@ public class BlobStorageContentStore : IContentStore
 
     public async Task SaveContentOfChangeRequest(RelationshipChangeRequest changeRequest)
     {
+        if (changeRequest.Content == null)
+            return;
+
         _blobStorage.Add($"{changeRequest.Id}_Req", changeRequest.Content);
         await _blobStorage.SaveAsync();
     }
 
     public async Task SaveContentOfChangeResponse(RelationshipChangeResponse changeResponse)
     {
+        if (changeResponse.Content == null)
+            return;
+
         _blobStorage.Add($"{changeResponse.Id}_Res", changeResponse.Content);
         await _blobStorage.SaveAsync();
     }

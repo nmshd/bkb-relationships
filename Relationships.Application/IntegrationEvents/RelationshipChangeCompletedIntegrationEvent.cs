@@ -11,7 +11,7 @@ public class RelationshipChangeCompletedIntegrationEvent : IntegrationEvent
         RelationshipId = change.RelationshipId;
         ChangeCreatedBy = change.Request.CreatedBy;
         ChangeRecipient = change.Request.CreatedBy == change.Relationship.From ? change.Relationship.To : change.Relationship.From;
-        ChangeResult = ChangeStatusToResult(change.Status);
+        ChangeResult = MapStatusToResult(change.Status);
     }
 
     public string ChangeId { get; }
@@ -20,7 +20,7 @@ public class RelationshipChangeCompletedIntegrationEvent : IntegrationEvent
     public string ChangeRecipient { get; }
     public string ChangeResult { get; }
 
-    private static string ChangeStatusToResult(RelationshipChangeStatus status)
+    private static string MapStatusToResult(RelationshipChangeStatus status)
     {
         return status switch
         {

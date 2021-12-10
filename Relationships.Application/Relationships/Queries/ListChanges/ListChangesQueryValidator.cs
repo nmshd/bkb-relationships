@@ -5,6 +5,7 @@ using Relationships.Common.FluentValidation;
 
 namespace Relationships.Application.Relationships.Queries.ListChanges;
 
+// ReSharper disable once UnusedMember.Global
 public class ListChangesQueryValidator : AbstractValidator<ListChangesQuery>
 {
     public ListChangesQueryValidator()

@@ -4,6 +4,7 @@ using FluentValidation;
 
 namespace Relationships.Application.Relationships.Commands.RejectRelationshipChangeRequest;
 
+// ReSharper disable once UnusedMember.Global
 public class RejectRelationshipChangeRequestCommandValidator : AbstractValidator<RejectRelationshipChangeRequestCommand>
 {
     public RejectRelationshipChangeRequestCommandValidator()

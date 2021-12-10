@@ -4,6 +4,7 @@ using FluentValidation;
 
 namespace Relationships.Application.Relationships.Commands.CreateRelationship;
 
+// ReSharper disable once UnusedMember.Global
 public class CreateRelationshipCommandValidator : AbstractValidator<CreateRelationshipCommand>
 {
     public CreateRelationshipCommandValidator()

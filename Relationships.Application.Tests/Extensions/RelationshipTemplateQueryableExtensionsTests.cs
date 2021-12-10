@@ -13,13 +13,12 @@ public class RelationshipTemplateQueryableExtensionsTests
     private static readonly DateTime Tomorrow = DateTime.UtcNow.AddDays(1);
     private static readonly DateTime Yesterday = DateTime.UtcNow.AddDays(-1);
 
-    private readonly ApplicationDbContext _assertionContext;
     private readonly ApplicationDbContext _arrangeContext;
     private readonly ApplicationDbContext _actContext;
 
     public RelationshipTemplateQueryableExtensionsTests()
     {
-        (_arrangeContext, _assertionContext, _actContext) = FakeDbContextFactory.CreateDbContexts<ApplicationDbContext>();
+        (_arrangeContext, _, _actContext) = FakeDbContextFactory.CreateDbContexts<ApplicationDbContext>();
     }
 
     [Fact]
@@ -37,14 +36,12 @@ public class RelationshipTemplateQueryableExtensionsTests
         _arrangeContext.Relationships.Add(relationship);
         _arrangeContext.SaveChanges();
 
-        var accessor = templateCreator;
-
 
         // Act
         var result = _actContext
             .RelationshipTemplates
             .AsQueryable()
-            .NotExpiredFor(accessor)
+            .NotExpiredFor(templateCreator)
             .ToList();
 
 

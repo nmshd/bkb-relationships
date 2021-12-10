@@ -53,14 +53,14 @@ public static class RelationshipQueryableExtensions
     {
         var newQuery = query;
 
-        if (createdAt != null)
-        {
-            if (createdAt.From != default)
-                newQuery = newQuery.Where(r => r.CreatedAt >= createdAt.From);
+        if (createdAt == null)
+            return newQuery;
 
-            if (createdAt.To != default)
-                newQuery = newQuery.Where(r => r.CreatedAt <= createdAt.To);
-        }
+        if (createdAt.From != default)
+            newQuery = newQuery.Where(r => r.CreatedAt >= createdAt.From);
+
+        if (createdAt.To != default)
+            newQuery = newQuery.Where(r => r.CreatedAt <= createdAt.To);
 
         return newQuery;
     }

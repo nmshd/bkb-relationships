@@ -113,33 +113,24 @@ public class RelationshipsController : ApiControllerBase
         return Created(relationship);
     }
 
-    [HttpPost("{id}/Changes")]
+    [HttpPost("{relationshipId}/Changes")]
     [ProducesResponseType(typeof(HttpResponseEnvelopeResult<RelationshipChangeDTO>), StatusCodes.Status200OK)]
-    public async Task<IActionResult> CreateRelationshipChange([FromRoute(Name = "id")] RelationshipId relationshipId, CreateRelationshipChangeRequest request)
+    public async Task<IActionResult> CreateRelationshipChange([FromRoute] RelationshipId relationshipId, CreateRelationshipChangeRequest request)
     {
-        RelationshipChangeMetadataDTO change;
-        switch (request.Type)
+        RelationshipChangeMetadataDTO change = request.Type switch
         {
-            case RelationshipChangeType.Creation:
-                throw new NotSupportedException();
-            case RelationshipChangeType.Termination:
-                change = await _mediator.Send(new CreateRelationshipTerminationRequestCommand
-                {
-                    Id = relationshipId
-                });
-                break;
-            case RelationshipChangeType.TerminationCancellation:
-                throw new NotImplementedException();
-            default:
-                throw new NotSupportedException();
-        }
+            RelationshipChangeType.Termination => await _mediator.Send(new CreateRelationshipTerminationRequestCommand {Id = relationshipId}),
+            RelationshipChangeType.TerminationCancellation => throw new NotImplementedException(),
+            RelationshipChangeType.Creation => throw new NotSupportedException(),
+            _ => throw new NotSupportedException()
+        };
 
         return Ok(change);
     }
 
-    [HttpPut("{id}/Changes/{changeId}/Accept")]
+    [HttpPut("{relationshipId}/Changes/{changeId}/Accept")]
     [ProducesResponseType(typeof(HttpResponseEnvelopeResult<RelationshipChangeDTO>), StatusCodes.Status200OK)]
-    public async Task<IActionResult> AcceptRelationshipChange([FromRoute(Name = "id")] RelationshipId relationshipId, [FromRoute(Name = "changeId")] RelationshipChangeId changeId, CompleteRelationshipChangeRequest request)
+    public async Task<IActionResult> AcceptRelationshipChange([FromRoute] RelationshipId relationshipId, [FromRoute] RelationshipChangeId changeId, CompleteRelationshipChangeRequest request)
     {
         var change = await _mediator.Send(new AcceptRelationshipChangeRequestCommand
         {
@@ -151,9 +142,9 @@ public class RelationshipsController : ApiControllerBase
         return Ok(change);
     }
 
-    [HttpPut("{id}/Changes/{changeId}/Reject")]
+    [HttpPut("{relationshipId}/Changes/{changeId}/Reject")]
     [ProducesResponseType(typeof(HttpResponseEnvelopeResult<RelationshipChangeDTO>), StatusCodes.Status200OK)]
-    public async Task<IActionResult> RejectRelationshipChange([FromRoute(Name = "id")] RelationshipId relationshipId, [FromRoute(Name = "changeId")] RelationshipChangeId changeId, CompleteRelationshipChangeRequest request)
+    public async Task<IActionResult> RejectRelationshipChange([FromRoute] RelationshipId relationshipId, [FromRoute(Name = "changeId")] RelationshipChangeId changeId, CompleteRelationshipChangeRequest request)
     {
         var change = await _mediator.Send(new RejectRelationshipChangeRequestCommand
         {
@@ -165,9 +156,9 @@ public class RelationshipsController : ApiControllerBase
         return Ok(change);
     }
 
-    [HttpPut("{id}/Changes/{changeId}/Revoke")]
+    [HttpPut("{relationshipId}/Changes/{changeId}/Revoke")]
     [ProducesResponseType(typeof(HttpResponseEnvelopeResult<RelationshipChangeDTO>), StatusCodes.Status200OK)]
-    public async Task<IActionResult> RevokeRelationshipChange([FromRoute(Name = "id")] RelationshipId relationshipId, [FromRoute(Name = "changeId")] RelationshipChangeId changeId, CompleteRelationshipChangeRequest request)
+    public async Task<IActionResult> RevokeRelationshipChange([FromRoute] RelationshipId relationshipId, [FromRoute(Name = "changeId")] RelationshipChangeId changeId, CompleteRelationshipChangeRequest request)
     {
         var change = await _mediator.Send(new RevokeRelationshipChangeRequestCommand
         {

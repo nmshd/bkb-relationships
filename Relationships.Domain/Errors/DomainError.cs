@@ -30,10 +30,7 @@ public class DomainError : IEquatable<DomainError>
         if (ReferenceEquals(this, obj))
             return true;
 
-        if (obj.GetType() != GetType())
-            return false;
-
-        return Equals((DomainError) obj);
+        return obj.GetType() == GetType() && Equals((DomainError) obj);
     }
 
     public override int GetHashCode()

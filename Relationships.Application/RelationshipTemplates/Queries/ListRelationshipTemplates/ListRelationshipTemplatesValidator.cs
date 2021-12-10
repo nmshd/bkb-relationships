@@ -5,6 +5,7 @@ using Relationships.Common.FluentValidation;
 
 namespace Relationships.Application.RelationshipTemplates.Queries.ListRelationshipTemplates;
 
+// ReSharper disable once UnusedMember.Global
 public class ListRelationshipTemplatesValidator : AbstractValidator<ListRelationshipTemplatesQuery>
 {
     public ListRelationshipTemplatesValidator()

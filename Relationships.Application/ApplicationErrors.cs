@@ -4,8 +4,6 @@ namespace Relationships.Application;
 
 public static class ApplicationErrors
 {
-    public static class RelationshipRequest { }
-
     public static class Relationship
     {
         public static ApplicationError MaxNumberOfRelationshipsForTemplateExhausted()
