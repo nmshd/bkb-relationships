@@ -2,14 +2,13 @@
 using Enmeshed.Tooling.Extensions;
 using FluentValidation;
 
-namespace Relationships.Application.Relationships.Commands.CreateRelationship
+namespace Relationships.Application.Relationships.Commands.CreateRelationship;
+
+public class CreateRelationshipCommandValidator : AbstractValidator<CreateRelationshipCommand>
 {
-    public class CreateRelationshipCommandValidator : AbstractValidator<CreateRelationshipCommand>
+    public CreateRelationshipCommandValidator()
     {
-        public CreateRelationshipCommandValidator()
-        {
-            RuleFor(c => c.RelationshipTemplateId).DetailedNotEmpty();
-            RuleFor(c => c.Content).NumberOfBytes(0, 10.Mebibytes());
-        }
+        RuleFor(c => c.RelationshipTemplateId).DetailedNotEmpty();
+        RuleFor(c => c.Content).NumberOfBytes(0, 10.Mebibytes());
     }
 }

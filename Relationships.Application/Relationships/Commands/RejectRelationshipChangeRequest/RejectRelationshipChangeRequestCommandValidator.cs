@@ -2,14 +2,13 @@
 using Enmeshed.Tooling.Extensions;
 using FluentValidation;
 
-namespace Relationships.Application.Relationships.Commands.RejectRelationshipChangeRequest
+namespace Relationships.Application.Relationships.Commands.RejectRelationshipChangeRequest;
+
+public class RejectRelationshipChangeRequestCommandValidator : AbstractValidator<RejectRelationshipChangeRequestCommand>
 {
-    public class RejectRelationshipChangeRequestCommandValidator : AbstractValidator<RejectRelationshipChangeRequestCommand>
+    public RejectRelationshipChangeRequestCommandValidator()
     {
-        public RejectRelationshipChangeRequestCommandValidator()
-        {
-            RuleFor(c => c.Id).DetailedNotNull();
-            RuleFor(c => c.ResponseContent).NumberOfBytes(0, 10.Mebibytes());
-        }
+        RuleFor(c => c.Id).DetailedNotNull();
+        RuleFor(c => c.ResponseContent).NumberOfBytes(0, 10.Mebibytes());
     }
 }

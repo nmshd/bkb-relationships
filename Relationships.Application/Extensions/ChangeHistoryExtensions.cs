@@ -1,25 +1,25 @@
 ﻿using Enmeshed.BuildingBlocks.Application.Abstractions.Exceptions;
 using Relationships.Domain.Entities;
+using ApplicationException = Enmeshed.BuildingBlocks.Application.Abstractions.Exceptions.ApplicationException;
 
-namespace Relationships.Application.Extensions
+namespace Relationships.Application.Extensions;
+
+public static class ChangeHistoryExtensions
 {
-    public static class ChangeHistoryExtensions
+    public static RelationshipChange GetLatestOpenOfTypeOrNull(this IRelationshipChangeLog changes, RelationshipChangeType type)
     {
-        public static RelationshipChange GetLatestOpenOfTypeOrNull(this IRelationshipChangeLog changes, RelationshipChangeType type)
-        {
-            var change = changes.LastOrDefault(c => c.Type == type && c.Status == RelationshipChangeStatus.Pending);
-            return change;
-        }
+        var change = changes.LastOrDefault(c => c.Type == type && c.Status == RelationshipChangeStatus.Pending);
+        return change;
+    }
 
 
-        public static RelationshipChange GetLatestOfType(this IRelationshipChangeLog changes, RelationshipChangeType type)
-        {
-            var change = changes.LastOrDefault(c => c.Type == type);
+    public static RelationshipChange GetLatestOfType(this IRelationshipChangeLog changes, RelationshipChangeType type)
+    {
+        var change = changes.LastOrDefault(c => c.Type == type);
 
-            if (change is null)
-                throw new ApplicationException(GenericApplicationErrors.NotFound(nameof(RelationshipChange)));
+        if (change is null)
+            throw new ApplicationException(GenericApplicationErrors.NotFound(nameof(RelationshipChange)));
 
-            return change;
-        }
+        return change;
     }
 }

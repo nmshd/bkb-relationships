@@ -1,13 +1,12 @@
 ﻿using Enmeshed.BuildingBlocks.Application.FluentValidation;
 using FluentValidation;
 
-namespace Relationships.Application.RelationshipTemplates.Command.DeleteRelationshipTemplate
+namespace Relationships.Application.RelationshipTemplates.Command.DeleteRelationshipTemplate;
+
+public class DeleteRelationshipTemplateCommandValidator : AbstractValidator<DeleteRelationshipTemplateCommand>
 {
-    public class DeleteRelationshipTemplateCommandValidator : AbstractValidator<DeleteRelationshipTemplateCommand>
+    public DeleteRelationshipTemplateCommandValidator()
     {
-        public DeleteRelationshipTemplateCommandValidator()
-        {
-            RuleFor(c => c.Id).DetailedNotNull();
-        }
+        RuleFor(c => c.Id).DetailedNotNull();
     }
 }

@@ -1,13 +1,12 @@
 ﻿using Enmeshed.BuildingBlocks.Application.FluentValidation;
 using FluentValidation;
 
-namespace Relationships.Application.Relationships.Commands.CreateRelationshipTerminationRequest
+namespace Relationships.Application.Relationships.Commands.CreateRelationshipTerminationRequest;
+
+public class CreateRelationshipTerminationRequestCommandValidator : AbstractValidator<CreateRelationshipTerminationRequestCommand>
 {
-    public class CreateRelationshipTerminationRequestCommandValidator : AbstractValidator<CreateRelationshipTerminationRequestCommand>
+    public CreateRelationshipTerminationRequestCommandValidator()
     {
-        public CreateRelationshipTerminationRequestCommandValidator()
-        {
-            RuleFor(c => c.Id).DetailedNotNull();
-        }
+        RuleFor(c => c.Id).DetailedNotNull();
     }
 }

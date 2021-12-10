@@ -2,10 +2,9 @@
 using Relationships.Application.Relationships.DTOs;
 using Relationships.Domain.Ids;
 
-namespace Relationships.Application.RelationshipTemplates.Queries.GetRelationshipTemplate
+namespace Relationships.Application.RelationshipTemplates.Queries.GetRelationshipTemplate;
+
+public class GetRelationshipTemplateQuery : IRequest<RelationshipTemplateDTO>
 {
-    public class GetRelationshipTemplateQuery : IRequest<RelationshipTemplateDTO>
-    {
-        public RelationshipTemplateId Id { get; set; }
-    }
+    public RelationshipTemplateId Id { get; set; }
 }

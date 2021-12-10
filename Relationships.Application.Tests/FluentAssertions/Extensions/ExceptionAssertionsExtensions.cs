@@ -2,13 +2,12 @@
 using FluentAssertions;
 using FluentAssertions.Specialized;
 
-namespace Relationships.Application.Tests.FluentAssertions.Extensions
+namespace Relationships.Application.Tests.FluentAssertions.Extensions;
+
+public static class ExceptionAssertionsExtensions
 {
-    public static class ExceptionAssertionsExtensions
+    public static void WithErrorCode(this ExceptionAssertions<OperationFailedException> exceptionAssertions, string errorCode)
     {
-        public static void WithErrorCode(this ExceptionAssertions<OperationFailedException> exceptionAssertions, string errorCode)
-        {
-            exceptionAssertions.Which.Code.Should().Be(errorCode);
-        }
+        exceptionAssertions.Which.Code.Should().Be(errorCode);
     }
 }

@@ -3,19 +3,18 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Relationships.Domain.Entities;
 using Relationships.Domain.Ids;
 
-namespace Relationships.Infrastructure.Persistence.Database.EntityTypeConfigurations
+namespace Relationships.Infrastructure.Persistence.Database.EntityTypeConfigurations;
+
+public class RelationshipTemplateEntityTypeConfiguration : IEntityTypeConfiguration<RelationshipTemplate>
 {
-    public class RelationshipTemplateEntityTypeConfiguration : IEntityTypeConfiguration<RelationshipTemplate>
+    public void Configure(EntityTypeBuilder<RelationshipTemplate> builder)
     {
-        public void Configure(EntityTypeBuilder<RelationshipTemplate> builder)
-        {
-            builder.HasIndex(x => x.CreatedBy);
-            builder.HasIndex(x => x.DeletedAt);
-            builder.HasIndex(x => x.ExpiresAt);
+        builder.HasIndex(x => x.CreatedBy);
+        builder.HasIndex(x => x.DeletedAt);
+        builder.HasIndex(x => x.ExpiresAt);
 
-            builder.Ignore(x => x.Content);
+        builder.Ignore(x => x.Content);
 
-            builder.Property(x => x.Id).HasColumnType($"char({RelationshipTemplateId.MAX_LENGTH})");
-        }
+        builder.Property(x => x.Id).HasColumnType($"char({RelationshipTemplateId.MAX_LENGTH})");
     }
 }

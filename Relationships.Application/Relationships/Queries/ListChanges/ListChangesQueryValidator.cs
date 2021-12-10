@@ -3,14 +3,13 @@ using FluentValidation;
 using Relationships.Common;
 using Relationships.Common.FluentValidation;
 
-namespace Relationships.Application.Relationships.Queries.ListChanges
+namespace Relationships.Application.Relationships.Queries.ListChanges;
+
+public class ListChangesQueryValidator : AbstractValidator<ListChangesQuery>
 {
-    public class ListChangesQueryValidator : AbstractValidator<ListChangesQuery>
+    public ListChangesQueryValidator()
     {
-        public ListChangesQueryValidator()
-        {
-            RuleFor(query => query.CreatedAt)
-                .IsValidRange<ListChangesQuery, OptionalDateRange, DateTime?>().WithErrorCode(GenericApplicationErrors.Validation.InvalidPropertyValue().Code);
-        }
+        RuleFor(query => query.CreatedAt)
+            .IsValidRange<ListChangesQuery, OptionalDateRange, DateTime?>().WithErrorCode(GenericApplicationErrors.Validation.InvalidPropertyValue().Code);
     }
 }

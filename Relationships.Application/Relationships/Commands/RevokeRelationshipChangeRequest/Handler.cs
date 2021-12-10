@@ -11,57 +11,56 @@ using Relationships.Domain;
 using Relationships.Domain.Entities;
 using Relationships.Domain.Errors;
 
-namespace Relationships.Application.Relationships.Commands.RevokeRelationshipChangeRequest
+namespace Relationships.Application.Relationships.Commands.RevokeRelationshipChangeRequest;
+
+public class Handler : IRequestHandler<RevokeRelationshipChangeRequestCommand, RevokeRelationshipChangeRequestResponse>
 {
-    public class Handler : IRequestHandler<RevokeRelationshipChangeRequestCommand, RevokeRelationshipChangeRequestResponse>
+    private readonly IContentStore _contentStore;
+    private readonly IDbContext _dbContext;
+    private readonly IEventBus _eventBus;
+    private readonly IMapper _mapper;
+    private readonly IUserContext _userContext;
+
+    public Handler(IDbContext dbContext, IUserContext userContext, IMapper mapper, IEventBus eventBus, IContentStore contentStore)
     {
-        private readonly IContentStore _contentStore;
-        private readonly IDbContext _dbContext;
-        private readonly IEventBus _eventBus;
-        private readonly IMapper _mapper;
-        private readonly IUserContext _userContext;
+        _dbContext = dbContext;
+        _userContext = userContext;
+        _mapper = mapper;
+        _eventBus = eventBus;
+        _contentStore = contentStore;
+    }
 
-        public Handler(IDbContext dbContext, IUserContext userContext, IMapper mapper, IEventBus eventBus, IContentStore contentStore)
+    public async Task<RevokeRelationshipChangeRequestResponse> Handle(RevokeRelationshipChangeRequestCommand changeRequest, CancellationToken cancellationToken)
+    {
+        var relationship = await _dbContext
+            .Set<Relationship>()
+            .IncludeAll()
+            .FirstWithId(changeRequest.Id, cancellationToken);
+
+        var change = relationship.RevokeChange(changeRequest.ChangeId, _userContext.GetAddress(), _userContext.GetDeviceId(), changeRequest.ResponseContent);
+
+        try
         {
-            _dbContext = dbContext;
-            _userContext = userContext;
-            _mapper = mapper;
-            _eventBus = eventBus;
-            _contentStore = contentStore;
+            await _contentStore.SaveContentOfChangeResponse(change.Response);
+        }
+        catch (BlobAlreadyExistsException)
+        {
+            throw new DomainException(DomainErrors.ChangeRequestIsAlreadyCompleted(change.Status));
         }
 
-        public async Task<RevokeRelationshipChangeRequestResponse> Handle(RevokeRelationshipChangeRequestCommand changeRequest, CancellationToken cancellationToken)
-        {
-            var relationship = await _dbContext
-                .Set<Relationship>()
-                .IncludeAll()
-                .FirstWithId(changeRequest.Id, cancellationToken);
+        _dbContext.Set<Relationship>().Update(relationship);
+        await _dbContext.SaveChangesAsync(cancellationToken);
 
-            var change = relationship.RevokeChange(changeRequest.ChangeId, _userContext.GetAddress(), _userContext.GetDeviceId(), changeRequest.ResponseContent);
+        PublishIntegrationEvent(change);
 
-            try
-            {
-                await _contentStore.SaveContentOfChangeResponse(change.Response);
-            }
-            catch (BlobAlreadyExistsException)
-            {
-                throw new DomainException(DomainErrors.ChangeRequestIsAlreadyCompleted(change.Status));
-            }
+        var response = _mapper.Map<RevokeRelationshipChangeRequestResponse>(relationship);
 
-            _dbContext.Set<Relationship>().Update(relationship);
-            await _dbContext.SaveChangesAsync(cancellationToken);
+        return response;
+    }
 
-            PublishIntegrationEvent(change);
-
-            var response = _mapper.Map<RevokeRelationshipChangeRequestResponse>(relationship);
-
-            return response;
-        }
-
-        private void PublishIntegrationEvent(RelationshipChange change)
-        {
-            var evt = new RelationshipChangeCompletedIntegrationEvent(change);
-            _eventBus.Publish(evt);
-        }
+    private void PublishIntegrationEvent(RelationshipChange change)
+    {
+        var evt = new RelationshipChangeCompletedIntegrationEvent(change);
+        _eventBus.Publish(evt);
     }
 }

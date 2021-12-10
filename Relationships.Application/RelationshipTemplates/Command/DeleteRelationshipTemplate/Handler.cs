@@ -8,24 +8,23 @@ using Relationships.Application.Extensions;
 using Relationships.Application.Relationships;
 using Relationships.Domain.Entities;
 
-namespace Relationships.Application.RelationshipTemplates.Command.DeleteRelationshipTemplate
+namespace Relationships.Application.RelationshipTemplates.Command.DeleteRelationshipTemplate;
+
+public class Handler : RequestHandlerBase<DeleteRelationshipTemplateCommand, Unit>
 {
-    public class Handler : RequestHandlerBase<DeleteRelationshipTemplateCommand, Unit>
+    public Handler(IDbContext dbContext, IUserContext userContext, IMapper mapper) : base(dbContext, userContext, mapper) { }
+
+    public override async Task<Unit> Handle(DeleteRelationshipTemplateCommand request, CancellationToken cancellationToken)
     {
-        public Handler(IDbContext dbContext, IUserContext userContext, IMapper mapper) : base(dbContext, userContext, mapper) { }
+        var template = await _dbContext.Set<RelationshipTemplate>().FirstWithId(request.Id, cancellationToken);
 
-        public override async Task<Unit> Handle(DeleteRelationshipTemplateCommand request, CancellationToken cancellationToken)
-        {
-            var template = await _dbContext.Set<RelationshipTemplate>().FirstWithId(request.Id, cancellationToken);
+        if (template.CreatedBy != _activeIdentity)
+            throw new ActionForbiddenException();
 
-            if (template.CreatedBy != _activeIdentity)
-                throw new ActionForbiddenException();
+        template.DeletedAt = SystemTime.UtcNow;
+        _dbContext.Set<RelationshipTemplate>().Update(template);
+        await _dbContext.SaveChangesAsync(cancellationToken);
 
-            template.DeletedAt = SystemTime.UtcNow;
-            _dbContext.Set<RelationshipTemplate>().Update(template);
-            await _dbContext.SaveChangesAsync(cancellationToken);
-
-            return Unit.Value;
-        }
+        return Unit.Value;
     }
 }

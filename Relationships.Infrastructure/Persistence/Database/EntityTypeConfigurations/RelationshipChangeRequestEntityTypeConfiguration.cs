@@ -5,31 +5,30 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Relationships.Domain.Entities;
 
-namespace Relationships.Infrastructure.Persistence.Database.EntityTypeConfigurations
+namespace Relationships.Infrastructure.Persistence.Database.EntityTypeConfigurations;
+
+public class RelationshipChangeRequestEntityTypeConfiguration : IEntityTypeConfiguration<RelationshipChangeRequest>
 {
-    public class RelationshipChangeRequestEntityTypeConfiguration : IEntityTypeConfiguration<RelationshipChangeRequest>
+    public void Configure(EntityTypeBuilder<RelationshipChangeRequest> builder)
     {
-        public void Configure(EntityTypeBuilder<RelationshipChangeRequest> builder)
-        {
-            builder.ToTable("RelationshipChanges");
+        builder.ToTable("RelationshipChanges");
 
-            builder.Ignore(x => x.Content);
+        builder.Ignore(x => x.Content);
 
-            builder.HasIndex(x => x.CreatedAt);
-            builder.HasIndex(x => x.CreatedBy);
-            builder.HasIndex(x => x.CreatedByDevice);
+        builder.HasIndex(x => x.CreatedAt);
+        builder.HasIndex(x => x.CreatedBy);
+        builder.HasIndex(x => x.CreatedByDevice);
 
-            builder.Property(x => x.CreatedBy)
-                .HasColumnName("Req_CreatedBy")
-                .HasConversion(new IdentityAddressValueConverter(new ConverterMappingHints(IdentityAddress.MAX_LENGTH)));
+        builder.Property(x => x.CreatedBy)
+            .HasColumnName("Req_CreatedBy")
+            .HasConversion(new IdentityAddressValueConverter(new ConverterMappingHints(IdentityAddress.MAX_LENGTH)));
 
-            builder.Property(x => x.CreatedByDevice)
-                .HasColumnName("Req_CreatedByDevice")
-                .HasConversion(new DeviceIdValueConverter(new ConverterMappingHints(DeviceId.MAX_LENGTH)));
+        builder.Property(x => x.CreatedByDevice)
+            .HasColumnName("Req_CreatedByDevice")
+            .HasConversion(new DeviceIdValueConverter(new ConverterMappingHints(DeviceId.MAX_LENGTH)));
 
-            builder.Property(x => x.CreatedAt)
-                .HasColumnName("Req_CreatedAt")
-                .HasConversion(new DateTimeValueConverter());
-        }
+        builder.Property(x => x.CreatedAt)
+            .HasColumnName("Req_CreatedAt")
+            .HasConversion(new DateTimeValueConverter());
     }
 }

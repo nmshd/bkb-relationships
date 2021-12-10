@@ -3,32 +3,31 @@ using System.Text.Json.Serialization;
 using Enmeshed.StronglyTypedIds;
 using Relationships.Domain.Ids;
 
-namespace Relationships.API.JsonConverters
+namespace Relationships.API.JsonConverters;
+
+public class RelationshipTemplateIdJsonConverter : JsonConverter<RelationshipTemplateId>
 {
-    public class RelationshipTemplateIdJsonConverter : JsonConverter<RelationshipTemplateId>
+    public override bool CanConvert(Type objectType)
     {
-        public override bool CanConvert(Type objectType)
-        {
-            return objectType == typeof(RelationshipTemplateId);
-        }
+        return objectType == typeof(RelationshipTemplateId);
+    }
 
-        public override RelationshipTemplateId Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-        {
-            var id = reader.GetString();
+    public override RelationshipTemplateId Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    {
+        var id = reader.GetString();
 
-            try
-            {
-                return RelationshipTemplateId.Parse(id);
-            }
-            catch (InvalidIdException ex)
-            {
-                throw new JsonException(ex.Message);
-            }
-        }
-
-        public override void Write(Utf8JsonWriter writer, RelationshipTemplateId value, JsonSerializerOptions options)
+        try
         {
-            writer.WriteStringValue(value.StringValue);
+            return RelationshipTemplateId.Parse(id);
         }
+        catch (InvalidIdException ex)
+        {
+            throw new JsonException(ex.Message);
+        }
+    }
+
+    public override void Write(Utf8JsonWriter writer, RelationshipTemplateId value, JsonSerializerOptions options)
+    {
+        writer.WriteStringValue(value.StringValue);
     }
 }

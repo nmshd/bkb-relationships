@@ -3,14 +3,13 @@ using FluentValidation;
 using Relationships.Common;
 using Relationships.Common.FluentValidation;
 
-namespace Relationships.Application.RelationshipTemplates.Queries.ListRelationshipTemplates
+namespace Relationships.Application.RelationshipTemplates.Queries.ListRelationshipTemplates;
+
+public class ListRelationshipTemplatesValidator : AbstractValidator<ListRelationshipTemplatesQuery>
 {
-    public class ListRelationshipTemplatesValidator : AbstractValidator<ListRelationshipTemplatesQuery>
+    public ListRelationshipTemplatesValidator()
     {
-        public ListRelationshipTemplatesValidator()
-        {
-            RuleFor(query => query.CreatedAt)
-                .IsValidRange<ListRelationshipTemplatesQuery, OptionalDateRange, DateTime?>().WithErrorCode(GenericApplicationErrors.Validation.InvalidPropertyValue().Code);
-        }
+        RuleFor(query => query.CreatedAt)
+            .IsValidRange<ListRelationshipTemplatesQuery, OptionalDateRange, DateTime?>().WithErrorCode(GenericApplicationErrors.Validation.InvalidPropertyValue().Code);
     }
 }
