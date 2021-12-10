@@ -2,10 +2,9 @@
 using Relationships.Application.Relationships.DTOs;
 using Relationships.Domain.Ids;
 
-namespace Relationships.Application.Relationships.Commands.CreateRelationshipTerminationRequest
+namespace Relationships.Application.Relationships.Commands.CreateRelationshipTerminationRequest;
+
+public class CreateRelationshipTerminationRequestCommand : IRequest<RelationshipChangeMetadataDTO>
 {
-    public class CreateRelationshipTerminationRequestCommand : IRequest<RelationshipChangeMetadataDTO>
-    {
-        public RelationshipId Id { get; set; }
-    }
+    public RelationshipId Id { get; set; }
 }

@@ -2,14 +2,14 @@
 using Enmeshed.Tooling.Extensions;
 using FluentValidation;
 
-namespace Relationships.Application.Relationships.Commands.RevokeRelationshipChangeRequest
+namespace Relationships.Application.Relationships.Commands.RevokeRelationshipChangeRequest;
+
+// ReSharper disable once UnusedMember.Global
+public class RevokeRelationshipChangeRequestCommandValidator : AbstractValidator<RevokeRelationshipChangeRequestCommand>
 {
-    public class RevokeRelationshipChangeRequestCommandValidator : AbstractValidator<RevokeRelationshipChangeRequestCommand>
+    public RevokeRelationshipChangeRequestCommandValidator()
     {
-        public RevokeRelationshipChangeRequestCommandValidator()
-        {
-            RuleFor(c => c.Id).DetailedNotNull();
-            RuleFor(c => c.ResponseContent).NumberOfBytes(0, 10.Mebibytes());
-        }
+        RuleFor(c => c.Id).DetailedNotNull();
+        RuleFor(c => c.ResponseContent).NumberOfBytes(0, 10.Mebibytes());
     }
 }

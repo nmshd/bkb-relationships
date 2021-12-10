@@ -1,11 +1,9 @@
-﻿using System.Collections.Generic;
-using Enmeshed.BuildingBlocks.Application.Pagination;
+﻿using Enmeshed.BuildingBlocks.Application.Pagination;
 using Relationships.Application.Relationships.DTOs;
 
-namespace Relationships.Application.RelationshipTemplates.Queries.ListRelationshipTemplates
+namespace Relationships.Application.RelationshipTemplates.Queries.ListRelationshipTemplates;
+
+public class ListRelationshipTemplatesResponse : PagedResponse<RelationshipTemplateDTO>
 {
-    public class ListRelationshipTemplatesResponse : PagedResponse<RelationshipTemplateDTO>
-    {
-        public ListRelationshipTemplatesResponse(IEnumerable<RelationshipTemplateDTO> items, PaginationFilter previousPaginationFilter, int totalRecords) : base(items, previousPaginationFilter, totalRecords) { }
-    }
+    public ListRelationshipTemplatesResponse(IEnumerable<RelationshipTemplateDTO> items, PaginationFilter previousPaginationFilter, int totalRecords) : base(items, previousPaginationFilter, totalRecords) { }
 }

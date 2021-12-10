@@ -1,15 +1,13 @@
-﻿using System;
-using Relationships.Domain.Errors;
+﻿using Relationships.Domain.Errors;
 
-namespace Relationships.Domain
+namespace Relationships.Domain;
+
+public class DomainException : Exception
 {
-    public class DomainException : Exception
+    public DomainException(DomainError error) : base(error.Message)
     {
-        public DomainException(DomainError error) : base(error.Message)
-        {
-            Error = error;
-        }
-
-        public DomainError Error { get; }
+        Error = error;
     }
+
+    public DomainError Error { get; }
 }
