@@ -39,6 +39,6 @@ public class Handler : RequestHandlerBase<ListRelationshipsQuery, ListRelationsh
 
         await _contentStore.FillContentOfChanges(changes);
 
-        return new ListRelationshipsResponse(dbPaginationResult.ItemsOnPage.Select(r => _mapper.Map<RelationshipDTO>(r)), request.PaginationFilter, dbPaginationResult.TotalNumberOfItems);
+        return new ListRelationshipsResponse(_mapper.Map<RelationshipDTO[]>(dbPaginationResult.ItemsOnPage), request.PaginationFilter, dbPaginationResult.TotalNumberOfItems);
     }
 }

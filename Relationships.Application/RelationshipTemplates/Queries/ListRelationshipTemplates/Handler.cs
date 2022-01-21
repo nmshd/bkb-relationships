@@ -36,10 +36,9 @@ public class Handler : RequestHandlerBase<ListRelationshipTemplatesQuery, ListRe
             query = query.CreatedAt(request.CreatedAt);
         
         var dbPaginationResult = await query.OrderAndPaginate(d => d.CreatedAt, request.PaginationFilter); ;
-        
 
         await _contentStore.FillContentOfTemplates(dbPaginationResult.ItemsOnPage);
 
-        return new ListRelationshipTemplatesResponse(dbPaginationResult.ItemsOnPage.Select(t => _mapper.Map<RelationshipTemplateDTO>(t)), request.PaginationFilter, dbPaginationResult.TotalNumberOfItems);
+        return new ListRelationshipTemplatesResponse(_mapper.Map<RelationshipTemplateDTO[]>(dbPaginationResult.ItemsOnPage), request.PaginationFilter, dbPaginationResult.TotalNumberOfItems);
     }
 }
