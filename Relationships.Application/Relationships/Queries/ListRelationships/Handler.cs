@@ -33,17 +33,12 @@ public class Handler : RequestHandlerBase<ListRelationshipsQuery, ListRelationsh
         if (request.CreatedAt != null)
             query = query.CreatedAt(request.CreatedAt);
         
-        var items = await query
-            .OrderBy(d => d.CreatedAt)
-            .Paged(request.PaginationFilter)
-            .ToListAsync(cancellationToken);
+        var dbPaginationResult = await query.OrderAndPaginate(d => d.CreatedAt, request.PaginationFilter); ;
 
-        var totalNumberOfItems = items.Count < request.PaginationFilter.PageSize ? items.Count : await query.CountAsync(cancellationToken);
-
-        var changes = items.SelectMany(r => r.Changes);
+        var changes = dbPaginationResult.ItemsOnPage.SelectMany(r => r.Changes);
 
         await _contentStore.FillContentOfChanges(changes);
 
-        return new ListRelationshipsResponse(items.Select(r => _mapper.Map<RelationshipDTO>(r)), request.PaginationFilter, totalNumberOfItems);
+        return new ListRelationshipsResponse(dbPaginationResult.ItemsOnPage.Select(r => _mapper.Map<RelationshipDTO>(r)), request.PaginationFilter, dbPaginationResult.TotalNumberOfItems);
     }
 }

@@ -40,15 +40,10 @@ public class Handler : RequestHandlerBase<ListChangesQuery, ListChangesResponse>
         if (request.OnlyPeerChanges)
             query = query.OnlyPeerChanges(_activeIdentity);
         
-        var items = await query
-            .OrderBy(d => d.CreatedAt)
-            .Paged(request.PaginationFilter)
-            .ToListAsync(cancellationToken);
+        var dbPaginationResult = await query.OrderAndPaginate(d => d.CreatedAt, request.PaginationFilter);
 
-        var totalNumberOfItems = items.Count < request.PaginationFilter.PageSize ? items.Count : await query.CountAsync(cancellationToken);
+        await _contentStore.FillContentOfChanges(dbPaginationResult.ItemsOnPage);
 
-        await _contentStore.FillContentOfChanges(items);
-
-        return new ListChangesResponse(items.Select(c => _mapper.Map<RelationshipChangeDTO>(c)), request.PaginationFilter, totalNumberOfItems);
+        return new ListChangesResponse(_mapper.Map<RelationshipChangeDTO[]>(dbPaginationResult.ItemsOnPage), request.PaginationFilter, dbPaginationResult.TotalNumberOfItems);
     }
 }

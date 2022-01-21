@@ -35,15 +35,11 @@ public class Handler : RequestHandlerBase<ListRelationshipTemplatesQuery, ListRe
         if (request.CreatedAt != null)
             query = query.CreatedAt(request.CreatedAt);
         
-        var items = await query
-            .OrderBy(d => d.CreatedAt)
-            .Paged(request.PaginationFilter)
-            .ToListAsync(cancellationToken);
+        var dbPaginationResult = await query.OrderAndPaginate(d => d.CreatedAt, request.PaginationFilter); ;
+        
 
-        var totalNumberOfItems = items.Count < request.PaginationFilter.PageSize ? items.Count : await query.CountAsync(cancellationToken);
+        await _contentStore.FillContentOfTemplates(dbPaginationResult.ItemsOnPage);
 
-        await _contentStore.FillContentOfTemplates(items);
-
-        return new ListRelationshipTemplatesResponse(items.Select(t => _mapper.Map<RelationshipTemplateDTO>(t)), request.PaginationFilter, totalNumberOfItems);
+        return new ListRelationshipTemplatesResponse(dbPaginationResult.ItemsOnPage.Select(t => _mapper.Map<RelationshipTemplateDTO>(t)), request.PaginationFilter, dbPaginationResult.TotalNumberOfItems);
     }
 }
