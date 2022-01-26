@@ -6,8 +6,6 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Relationships.Infrastructure.Persistence.Database;
 
-#nullable disable
-
 namespace Relationships.Infrastructure.Persistence.Database.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
@@ -17,44 +15,31 @@ namespace Relationships.Infrastructure.Persistence.Database.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.0")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
-
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+                .UseIdentityColumns()
+                .HasAnnotation("Relational:MaxIdentifierLength", 128)
+                .HasAnnotation("ProductVersion", "5.0.0");
 
             modelBuilder.Entity("Relationships.Domain.Entities.Relationship", b =>
                 {
                     b.Property<string>("Id")
-                        .HasMaxLength(20)
-                        .IsUnicode(false)
-                        .HasColumnType("char(20)")
-                        .IsFixedLength();
+                        .HasColumnType("char(20)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("From")
                         .IsRequired()
-                        .HasMaxLength(36)
-                        .IsUnicode(false)
-                        .HasColumnType("char(36)")
-                        .IsFixedLength();
+                        .HasColumnType("char(36)");
 
                     b.Property<string>("RelationshipTemplateId")
-                        .HasMaxLength(20)
-                        .IsUnicode(false)
-                        .HasColumnType("char(20)")
-                        .IsFixedLength();
+                        .HasColumnType("char(20)");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
                     b.Property<string>("To")
                         .IsRequired()
-                        .HasMaxLength(36)
-                        .IsUnicode(false)
-                        .HasColumnType("char(36)")
-                        .IsFixedLength();
+                        .HasColumnType("char(36)");
 
                     b.HasKey("Id");
 
@@ -74,10 +59,7 @@ namespace Relationships.Infrastructure.Persistence.Database.Migrations
             modelBuilder.Entity("Relationships.Domain.Entities.RelationshipChange", b =>
                 {
                     b.Property<string>("Id")
-                        .HasMaxLength(20)
-                        .IsUnicode(false)
-                        .HasColumnType("char(20)")
-                        .IsFixedLength();
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -88,10 +70,7 @@ namespace Relationships.Infrastructure.Persistence.Database.Migrations
 
                     b.Property<string>("RelationshipId")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .IsUnicode(false)
-                        .HasColumnType("char(20)")
-                        .IsFixedLength();
+                        .HasColumnType("char(20)");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -109,7 +88,7 @@ namespace Relationships.Infrastructure.Persistence.Database.Migrations
 
                     b.HasIndex("Type");
 
-                    b.ToTable("RelationshipChanges", (string)null);
+                    b.ToTable("RelationshipChanges");
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("RelationshipChange");
                 });
@@ -117,10 +96,7 @@ namespace Relationships.Infrastructure.Persistence.Database.Migrations
             modelBuilder.Entity("Relationships.Domain.Entities.RelationshipChangeRequest", b =>
                 {
                     b.Property<string>("Id")
-                        .HasMaxLength(20)
-                        .IsUnicode(false)
-                        .HasColumnType("char(20)")
-                        .IsFixedLength();
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2")
@@ -128,19 +104,13 @@ namespace Relationships.Infrastructure.Persistence.Database.Migrations
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
-                        .HasMaxLength(36)
-                        .IsUnicode(false)
-                        .HasColumnType("char(36)")
-                        .HasColumnName("Req_CreatedBy")
-                        .IsFixedLength();
+                        .HasColumnType("nvarchar(36)")
+                        .HasColumnName("Req_CreatedBy");
 
                     b.Property<string>("CreatedByDevice")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .IsUnicode(false)
-                        .HasColumnType("char(20)")
-                        .HasColumnName("Req_CreatedByDevice")
-                        .IsFixedLength();
+                        .HasColumnType("nvarchar(20)")
+                        .HasColumnName("Req_CreatedByDevice");
 
                     b.HasKey("Id");
 
@@ -150,16 +120,13 @@ namespace Relationships.Infrastructure.Persistence.Database.Migrations
 
                     b.HasIndex("CreatedByDevice");
 
-                    b.ToTable("RelationshipChanges", (string)null);
+                    b.ToTable("RelationshipChanges");
                 });
 
             modelBuilder.Entity("Relationships.Domain.Entities.RelationshipChangeResponse", b =>
                 {
                     b.Property<string>("Id")
-                        .HasMaxLength(20)
-                        .IsUnicode(false)
-                        .HasColumnType("char(20)")
-                        .IsFixedLength();
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2")
@@ -167,19 +134,13 @@ namespace Relationships.Infrastructure.Persistence.Database.Migrations
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
-                        .HasMaxLength(36)
-                        .IsUnicode(false)
-                        .HasColumnType("char(36)")
-                        .HasColumnName("Res_CreatedBy")
-                        .IsFixedLength();
+                        .HasColumnType("nvarchar(36)")
+                        .HasColumnName("Res_CreatedBy");
 
                     b.Property<string>("CreatedByDevice")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .IsUnicode(false)
-                        .HasColumnType("char(20)")
-                        .HasColumnName("Res_CreatedByDevice")
-                        .IsFixedLength();
+                        .HasColumnType("nvarchar(20)")
+                        .HasColumnName("Res_CreatedByDevice");
 
                     b.HasKey("Id");
 
@@ -189,33 +150,24 @@ namespace Relationships.Infrastructure.Persistence.Database.Migrations
 
                     b.HasIndex("CreatedByDevice");
 
-                    b.ToTable("RelationshipChanges", (string)null);
+                    b.ToTable("RelationshipChanges");
                 });
 
             modelBuilder.Entity("Relationships.Domain.Entities.RelationshipTemplate", b =>
                 {
                     b.Property<string>("Id")
-                        .HasMaxLength(20)
-                        .IsUnicode(false)
-                        .HasColumnType("char(20)")
-                        .IsFixedLength();
+                        .HasColumnType("char(20)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
-                        .HasMaxLength(36)
-                        .IsUnicode(false)
-                        .HasColumnType("char(36)")
-                        .IsFixedLength();
+                        .HasColumnType("nvarchar(36)");
 
                     b.Property<string>("CreatedByDevice")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .IsUnicode(false)
-                        .HasColumnType("char(20)")
-                        .IsFixedLength();
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
@@ -241,7 +193,7 @@ namespace Relationships.Infrastructure.Persistence.Database.Migrations
                 {
                     b.HasBaseType("Relationships.Domain.Entities.RelationshipChange");
 
-                    b.ToTable("RelationshipChanges", (string)null);
+                    b.ToTable("RelationshipChanges");
 
                     b.HasDiscriminator().HasValue("RelationshipCreationChange");
                 });
@@ -250,16 +202,18 @@ namespace Relationships.Infrastructure.Persistence.Database.Migrations
                 {
                     b.HasBaseType("Relationships.Domain.Entities.RelationshipChange");
 
-                    b.ToTable("RelationshipChanges", (string)null);
+                    b.ToTable("RelationshipChanges");
 
                     b.HasDiscriminator().HasValue("RelationshipTerminationChange");
                 });
 
             modelBuilder.Entity("Relationships.Domain.Entities.Relationship", b =>
                 {
-                    b.HasOne("Relationships.Domain.Entities.RelationshipTemplate", null)
+                    b.HasOne("Relationships.Domain.Entities.RelationshipTemplate", "RelationshipTemplate")
                         .WithMany("Relationships")
                         .HasForeignKey("RelationshipTemplateId");
+
+                    b.Navigation("RelationshipTemplate");
                 });
 
             modelBuilder.Entity("Relationships.Domain.Entities.RelationshipChange", b =>
