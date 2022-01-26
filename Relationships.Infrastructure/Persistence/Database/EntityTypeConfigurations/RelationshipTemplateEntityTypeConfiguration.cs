@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Enmeshed.DevelopmentKit.Identity.ValueObjects;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Relationships.Domain.Entities;
 using Relationships.Domain.Ids;
@@ -14,7 +15,5 @@ public class RelationshipTemplateEntityTypeConfiguration : IEntityTypeConfigurat
         builder.HasIndex(x => x.ExpiresAt);
 
         builder.Ignore(x => x.Content);
-
-        builder.Property(x => x.Id).HasColumnType($"char({RelationshipTemplateId.MAX_LENGTH})");
     }
 }

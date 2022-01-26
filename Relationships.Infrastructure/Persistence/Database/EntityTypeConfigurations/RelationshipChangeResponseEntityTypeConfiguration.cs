@@ -20,15 +20,12 @@ public class RelationshipChangeResponseEntityTypeConfiguration : IEntityTypeConf
         builder.HasIndex(x => x.CreatedByDevice);
 
         builder.Property(x => x.CreatedBy)
-            .HasColumnName("Res_CreatedBy")
-            .HasConversion(new IdentityAddressValueConverter(new ConverterMappingHints(IdentityAddress.MAX_LENGTH)));
+            .HasColumnName("Res_CreatedBy");
 
         builder.Property(x => x.CreatedByDevice)
-            .HasColumnName("Res_CreatedByDevice")
-            .HasConversion(new DeviceIdValueConverter(new ConverterMappingHints(DeviceId.MAX_LENGTH)));
+            .HasColumnName("Res_CreatedByDevice");
 
         builder.Property(x => x.CreatedAt)
-            .HasColumnName("Res_CreatedAt")
-            .HasConversion(new DateTimeValueConverter());
+            .HasColumnName("Res_CreatedAt");
     }
 }
