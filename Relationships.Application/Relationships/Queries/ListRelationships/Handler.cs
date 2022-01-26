@@ -33,7 +33,7 @@ public class Handler : RequestHandlerBase<ListRelationshipsQuery, ListRelationsh
         if (request.CreatedAt != null)
             query = query.CreatedAt(request.CreatedAt);
         
-        var dbPaginationResult = await query.OrderAndPaginate(d => d.CreatedAt, request.PaginationFilter); ;
+        var dbPaginationResult = await query.OrderAndPaginate(d => d.CreatedAt, request.PaginationFilter);
 
         var changes = dbPaginationResult.ItemsOnPage.SelectMany(r => r.Changes);
 
