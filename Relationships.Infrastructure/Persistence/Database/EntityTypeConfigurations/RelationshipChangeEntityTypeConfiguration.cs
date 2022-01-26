@@ -24,11 +24,12 @@ public class RelationshipChangeEntityTypeConfiguration : IEntityTypeConfiguratio
         builder.Ignore("Req_Content");
         builder.Ignore("Res_Content");
 
+        builder.HasKey(x => x.Id);
+
+        builder.Property(x => x.RelationshipId);
+
         builder.HasOne(x => x.Relationship).WithMany(x => x.Changes);
-
-        builder.Property(x => x.Id)
-            .HasConversion(new RelationshipChangeIdEntityFrameworkValueConverter(new ConverterMappingHints(RelationshipChangeId.MAX_LENGTH)));
-
+        
         builder
             .HasOne(x => x.Request).WithOne()
             .HasForeignKey<RelationshipChangeRequest>(b => b.Id);

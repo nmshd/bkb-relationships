@@ -20,15 +20,12 @@ public class RelationshipChangeRequestEntityTypeConfiguration : IEntityTypeConfi
         builder.HasIndex(x => x.CreatedByDevice);
 
         builder.Property(x => x.CreatedBy)
-            .HasColumnName("Req_CreatedBy")
-            .HasConversion(new IdentityAddressValueConverter(new ConverterMappingHints(IdentityAddress.MAX_LENGTH)));
+            .HasColumnName("Req_CreatedBy");
 
         builder.Property(x => x.CreatedByDevice)
-            .HasColumnName("Req_CreatedByDevice")
-            .HasConversion(new DeviceIdValueConverter(new ConverterMappingHints(DeviceId.MAX_LENGTH)));
+            .HasColumnName("Req_CreatedByDevice");
 
         builder.Property(x => x.CreatedAt)
-            .HasColumnName("Req_CreatedAt")
-            .HasConversion(new DateTimeValueConverter());
+            .HasColumnName("Req_CreatedAt");
     }
 }

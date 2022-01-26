@@ -17,13 +17,19 @@ public class ApplicationDbContext : AbstractDbContextBase
     public DbSet<RelationshipChange> RelationshipChanges { get; set; }
     public DbSet<RelationshipTemplate> RelationshipTemplates { get; set; }
 
+    protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
+    {
+        base.ConfigureConventions(configurationBuilder);
+
+        configurationBuilder.Properties<RelationshipId>().AreUnicode(false).AreFixedLength().HaveMaxLength(RelationshipId.MAX_LENGTH).HaveConversion<RelationshipIdEntityFrameworkValueConverter>();
+        configurationBuilder.Properties<RelationshipTemplateId>().AreUnicode(false).AreFixedLength().HaveMaxLength(RelationshipTemplateId.MAX_LENGTH).HaveConversion<RelationshipTemplateIdEntityFrameworkValueConverter>();
+        configurationBuilder.Properties<RelationshipChangeId>().AreUnicode(false).AreFixedLength().HaveMaxLength(RelationshipChangeId.MAX_LENGTH).HaveConversion<RelationshipChangeIdEntityFrameworkValueConverter>();
+    }
+
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
-
-        builder.UseValueConverter(new RelationshipIdEntityFrameworkValueConverter(new ConverterMappingHints(RelationshipId.MAX_LENGTH)));
-        builder.UseValueConverter(new RelationshipTemplateIdEntityFrameworkValueConverter(new ConverterMappingHints(RelationshipId.MAX_LENGTH)));
 
         builder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
     }
