@@ -7,9 +7,9 @@ namespace Relationships.Domain.Entities;
 
 public class RelationshipTemplateAllocation
 {
-    public RelationshipTemplateAllocation(RelationshipTemplateId templateId, IdentityAddress allocatedBy, DeviceId allocatedByDevice)
+    public RelationshipTemplateAllocation(RelationshipTemplateId relationshipTemplateId, IdentityAddress allocatedBy, DeviceId allocatedByDevice)
     {
-        RelationshipTemplateId = templateId;
+        RelationshipTemplateId = relationshipTemplateId;
         AllocatedAt = SystemTime.UtcNow;
         AllocatedBy = allocatedBy;
         AllocatedByDevice = allocatedByDevice;
