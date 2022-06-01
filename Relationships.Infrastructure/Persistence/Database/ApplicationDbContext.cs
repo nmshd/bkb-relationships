@@ -23,9 +23,10 @@ public class ApplicationDbContext : AbstractDbContextBase
 
         configurationBuilder.Properties<RelationshipId>().AreUnicode(false).AreFixedLength().HaveMaxLength(RelationshipId.MAX_LENGTH).HaveConversion<RelationshipIdEntityFrameworkValueConverter>();
         configurationBuilder.Properties<RelationshipTemplateId>().AreUnicode(false).AreFixedLength().HaveMaxLength(RelationshipTemplateId.MAX_LENGTH).HaveConversion<RelationshipTemplateIdEntityFrameworkValueConverter>();
-        configurationBuilder.Properties<RelationshipChangeId>().AreUnicode(false).AreFixedLength().HaveMaxLength(RelationshipChangeId.MAX_LENGTH).HaveConversion<RelationshipChangeIdEntityFrameworkValueConverter>();
-    }
 
+        // Uncommenting the following means that we would have to recreate the table on the database, which is why we decided to leave RelationshipChangeIds in nvarchar(20) for now.
+        configurationBuilder.Properties<RelationshipChangeId>().HaveMaxLength(RelationshipChangeId.MAX_LENGTH).HaveConversion<RelationshipChangeIdEntityFrameworkValueConverter>(); //.AreFixedLength().AreUnicode(false)
+    }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

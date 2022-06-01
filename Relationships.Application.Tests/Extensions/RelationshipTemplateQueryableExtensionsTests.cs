@@ -10,7 +10,6 @@ namespace Relationships.Application.Tests.Extensions;
 
 public class RelationshipTemplateQueryableExtensionsTests
 {
-    private static readonly DateTime Tomorrow = DateTime.UtcNow.AddDays(1);
     private static readonly DateTime Yesterday = DateTime.UtcNow.AddDays(-1);
 
     private readonly ApplicationDbContext _arrangeContext;
@@ -28,7 +27,7 @@ public class RelationshipTemplateQueryableExtensionsTests
         var templateCreator = IdentityAddress.Create(new byte[2], "id0");
         var requestCreator = IdentityAddress.Create(new byte[5], "id0");
 
-        var template = new RelationshipTemplate(templateCreator, DeviceId.New(), 5, Yesterday, new byte[2]);
+        var template = new RelationshipTemplate(templateCreator, DeviceId.New(), 1, 1, Yesterday, new byte[2]);
         var relationship = new Relationship(template, requestCreator, DeviceId.New(), new byte[2]);
 
 
@@ -56,7 +55,7 @@ public class RelationshipTemplateQueryableExtensionsTests
         var templateCreator = TestDataGenerator.CreateRandomAddress();
         var requestCreator = TestDataGenerator.CreateRandomAddress();
 
-        var template = new RelationshipTemplate(templateCreator, DeviceId.New(), 5, null, TestDataGenerator.CreateRandomBytes());
+        var template = new RelationshipTemplate(templateCreator, DeviceId.New(), 1, 1, null, TestDataGenerator.CreateRandomBytes());
         var relationship = new Relationship(template, requestCreator, DeviceId.New(), TestDataGenerator.CreateRandomBytes());
 
 
@@ -86,7 +85,7 @@ public class RelationshipTemplateQueryableExtensionsTests
         var templateCreator = TestDataGenerator.CreateRandomAddress();
         var requestCreator = TestDataGenerator.CreateRandomAddress();
 
-        var template = new RelationshipTemplate(templateCreator, DeviceId.New(), 5, Yesterday, TestDataGenerator.CreateRandomBytes());
+        var template = new RelationshipTemplate(templateCreator, DeviceId.New(), 1, 1, Yesterday, TestDataGenerator.CreateRandomBytes());
         var relationship = new Relationship(template, requestCreator, DeviceId.New(), TestDataGenerator.CreateRandomBytes());
 
 

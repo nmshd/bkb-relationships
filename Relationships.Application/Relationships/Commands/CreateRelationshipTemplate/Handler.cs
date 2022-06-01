@@ -28,6 +28,7 @@ public class Handler : IRequestHandler<CreateRelationshipTemplateCommand, Create
             _userContext.GetAddress(),
             _userContext.GetDeviceId(),
             request.MaxNumberOfRelationships,
+            request.MaxNumberOfAllocations,
             request.ExpiresAt,
             request.Content);
 

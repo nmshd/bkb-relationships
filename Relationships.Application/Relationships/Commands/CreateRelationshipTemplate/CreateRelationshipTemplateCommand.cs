@@ -8,5 +8,6 @@ public class CreateRelationshipTemplateCommand : IMapTo<RelationshipTemplate>, I
 {
     public DateTime? ExpiresAt { get; set; }
     public int? MaxNumberOfRelationships { get; set; }
+    public int? MaxNumberOfAllocations{ get; set; }
     public byte[] Content { get; set; }
 }

@@ -11,16 +11,16 @@ namespace Relationships.Domain.Tests.Tests;
 
 public class RelationshipTests
 {
-    private static readonly IdentityAddress FromIdentity = IdentityAddress.Create(new byte[] {1, 1, 1}, "id1");
+    private static readonly IdentityAddress FromIdentity = IdentityAddress.Create(new byte[] { 1, 1, 1 }, "id1");
     private static readonly DeviceId FromDevice = DeviceId.New();
 
-    private static readonly IdentityAddress ToIdentity = IdentityAddress.Create(new byte[] {2, 2, 2}, "id1");
+    private static readonly IdentityAddress ToIdentity = IdentityAddress.Create(new byte[] { 2, 2, 2 }, "id1");
     private static readonly DeviceId ToDevice = DeviceId.New();
 
-    private static readonly byte[] RequestContent = {1, 1, 1};
-    private static readonly byte[] ResponseContent = {2, 2, 2};
+    private static readonly byte[] RequestContent = { 1, 1, 1 };
+    private static readonly byte[] ResponseContent = { 2, 2, 2 };
 
-    private static readonly RelationshipTemplate Template = new(ToIdentity, ToDevice, 1, SystemTime.UtcNow.AddDays(1), new byte[] {0});
+    private static readonly RelationshipTemplate Template = new(ToIdentity, ToDevice, 1, 1, SystemTime.UtcNow.AddDays(1), new byte[] { 0 });
 
     #region Creation
 

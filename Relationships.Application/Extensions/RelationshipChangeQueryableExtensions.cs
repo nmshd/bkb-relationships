@@ -89,12 +89,12 @@ public static class RelationshipChangeQueryableExtensions
 
     public static IQueryable<RelationshipChange> CreatedBy(this IQueryable<RelationshipChange> query, IdentityAddress identityId)
     {
-        return identityId is not null ? query.Where(r => r.Request.CreatedBy == identityId) : query;
+        return identityId != null ? query.Where(r => r.Request.CreatedBy == identityId) : query;
     }
 
     public static IQueryable<RelationshipChange> CompletedBy(this IQueryable<RelationshipChange> query, IdentityAddress identityId)
     {
-        return identityId is not null ? query.Where(r => r.Response != null && r.Response.CreatedBy == identityId) : query;
+        return identityId != null ? query.Where(r => r.Response != null && r.Response.CreatedBy == identityId) : query;
     }
 
     public static IQueryable<RelationshipChange> WithId(this IQueryable<RelationshipChange> query, RelationshipChangeId id)
