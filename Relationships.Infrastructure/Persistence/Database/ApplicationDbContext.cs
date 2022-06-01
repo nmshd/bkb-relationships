@@ -17,13 +17,6 @@ public class ApplicationDbContext : AbstractDbContextBase
     public DbSet<RelationshipChange> RelationshipChanges { get; set; }
     public DbSet<RelationshipTemplate> RelationshipTemplates { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        base.OnConfiguring(optionsBuilder);
-
-        optionsBuilder.UseSqlServer();
-    }
-
     protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
     {
         base.ConfigureConventions(configurationBuilder);
