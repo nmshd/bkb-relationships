@@ -12,6 +12,7 @@ public class RelationshipTemplateDTO : IMapTo<RelationshipTemplate>
     public IdentityAddress CreatedBy { get; set; }
     public DeviceId CreatedByDevice { get; set; }
     public int? MaxNumberOfRelationships { get; set; }
+    public int? MaxNumberOfAllocations { get; set; }
     public DateTime? ExpiresAt { get; set; }
     public byte[] Content { get; set; }
 
