@@ -15,6 +15,9 @@ public class CreateRelationshipTemplateCommandValidator : AbstractValidator<Crea
         RuleFor(c => c.MaxNumberOfRelationships)
             .GreaterThan(0).WithErrorCode(GenericApplicationErrors.Validation.InvalidPropertyValue().Code).When(c => c.MaxNumberOfRelationships != null);
 
+        RuleFor(c => c.MaxNumberOfAllocations)
+            .GreaterThan(0).WithErrorCode(GenericApplicationErrors.Validation.InvalidPropertyValue().Code).When(c => c.MaxNumberOfAllocations != null);
+
         RuleFor(c => c.ExpiresAt)
             .GreaterThan(SystemTime.UtcNow).WithMessage("'{PropertyName}' must be in the future.").WithErrorCode(GenericApplicationErrors.Validation.InvalidPropertyValue().Code).When(c => c.ExpiresAt != null);
     }
