@@ -1,5 +1,6 @@
 ﻿using Enmeshed.DevelopmentKit.Identity.ValueObjects;
 using Enmeshed.Tooling;
+using Relationships.Domain.Errors;
 using Relationships.Domain.Ids;
 
 namespace Relationships.Domain.Entities;
@@ -10,7 +11,7 @@ public class RelationshipTemplate
     private RelationshipTemplate() { }
 #pragma warning restore CS8618
 
-    public RelationshipTemplate(IdentityAddress createdBy, DeviceId createdByDevice, int? maxNumberOfRelationships, DateTime? expiresAt, byte[] content)
+    public RelationshipTemplate(IdentityAddress createdBy, DeviceId createdByDevice, int? maxNumberOfRelationships, int? maxNumberOfAllocations, DateTime? expiresAt, byte[] content)
     {
         Id = RelationshipTemplateId.New();
         CreatedAt = SystemTime.UtcNow;
@@ -18,6 +19,7 @@ public class RelationshipTemplate
         CreatedBy = createdBy;
         CreatedByDevice = createdByDevice;
         MaxNumberOfRelationships = maxNumberOfRelationships;
+        MaxNumberOfAllocations = maxNumberOfAllocations;
         ExpiresAt = expiresAt;
         Content = content;
     }
@@ -29,11 +31,28 @@ public class RelationshipTemplate
     public IdentityAddress CreatedBy { get; set; }
     public DeviceId CreatedByDevice { get; set; }
     public int? MaxNumberOfRelationships { get; set; }
+    public int? MaxNumberOfAllocations { get; set; }
     public DateTime? ExpiresAt { get; set; }
     public byte[]? Content { get; private set; }
 
     public DateTime CreatedAt { get; set; }
     public DateTime? DeletedAt { get; set; }
+
+    public List<RelationshipTemplateAllocation> Allocations { get; set; } = new();
+
+    public void AllocateFor(IdentityAddress identity, DeviceId device)
+    {
+        if (identity == CreatedBy)
+            return;
+
+        if (Allocations.Any(x => x.AllocatedBy == identity))
+            return;
+
+        if (Allocations.Count == MaxNumberOfAllocations)
+            throw new DomainException(DomainErrors.MaxNumberOfAllocationsExhausted());
+
+        Allocations.Add(new RelationshipTemplateAllocation(Id, identity, device));
+    }
 
     public void LoadContent(byte[] content)
     {

@@ -45,4 +45,9 @@ public static class DomainErrors
     {
         return new DomainError("error.platform.relationships.contentIsRequiredForCompletingRelationships", "The content property is required for accepting a relationship.");
     }
+
+    public static DomainError MaxNumberOfAllocationsExhausted()
+    {
+        return new DomainError("error.platform.validation.relationshipTemplate.maxNumberOfAllocationsExhausted", "The maximum number of allocations (maxNumberOfAllocations) of the template you are trying to read is exhausted.");
+    }
 }
