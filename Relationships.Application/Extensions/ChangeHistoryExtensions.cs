@@ -17,7 +17,7 @@ public static class ChangeHistoryExtensions
     {
         var change = changes.LastOrDefault(c => c.Type == type);
 
-        if (change is null)
+        if (change == null)
             throw new ApplicationException(GenericApplicationErrors.NotFound(nameof(RelationshipChange)));
 
         return change;
